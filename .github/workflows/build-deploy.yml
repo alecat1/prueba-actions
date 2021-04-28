@@ -16,8 +16,8 @@ jobs:
       path: ~/.npm
       key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
       restore-keys: |
-        ${{ runner.os }}-node-
-  - name: Node ${{ matrix.node-version }}
+          ${{ runner.os }}-node-
+  - name: Build
     uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
