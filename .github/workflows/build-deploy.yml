@@ -1,33 +1,31 @@
-on: push
-name: build prueba
-jobs: 
-  build:
+name: prueba github-actions
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-deploy:
     runs-on: windows-latest
-    strategy:
-    matrix:
-      node-version: [14.x]
-    
     steps:
-    -uses: actions/checkout@v1
-
-    -name: Cache node modules
-    uses: actions/cache@v1
-    with:
-      path: ~/.npm
-      key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-      restore-keys: |
-          ${{ runner.os }}-node-
-  - name: Build
-    uses: actions/setup-node@v1
+      - name: Checkout
+        uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: npm install and npm run build
+          node-version: '10.x'
+      - uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Build
         run: |
-          npm i
+          npm install
           npm run-script deploy
       - name: Deploy
         uses: alecat1/release-action@v1
         with:
-          artifacts: "dist/angular-githubaction/*"
-          token: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: dist/workshop
   
