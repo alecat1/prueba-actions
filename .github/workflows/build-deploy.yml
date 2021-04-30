@@ -27,6 +27,12 @@ jobs:
         run: |
           npm i
           npm run-script build
+      - name: Deploy 
+        uses: JamesIves/github-pages-deploy-action@releases/v3                             
+        with:  
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages  
+          FOLDER: dist/prueba-actions
       - name: Deploy to firebase
         uses: w9jds/firebase-action@master
         with:
