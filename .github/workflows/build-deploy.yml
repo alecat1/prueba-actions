@@ -6,7 +6,6 @@ on:
 jobs:
   build-and-deploy:
     name: Mi primer job
-    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Ejecutar deploy
@@ -24,8 +23,6 @@ jobs:
         run: |
           npm install
           npm run-script deploy
-      - name: Checkout repo
-        uses: actions/checkout@master
       - name: Deploy to firebase
         uses: w9jds/firebase-action@master
         with:
