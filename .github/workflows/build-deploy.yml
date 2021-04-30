@@ -26,7 +26,7 @@ jobs:
       - name: Build
         run: |
           npm i
-          npm run build:prod
+          npm run-script build
       - name: Deploy to firebase
         uses: w9jds/firebase-action@master
         with:
