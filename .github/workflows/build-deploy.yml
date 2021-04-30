@@ -1,13 +1,15 @@
-name: prueba github-actions
+name: Mi primer workflow
 on:
   push:
     branches:
       - main
 jobs:
   build-and-deploy:
-    runs-on: windows-latest
+    name: Mi primer job
+    needs: build
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Ejecutar deploy
         uses: actions/checkout@v1
       - uses: actions/setup-node@v1
         with:
@@ -22,10 +24,12 @@ jobs:
         run: |
           npm install
           npm run-script deploy
-      - name: Deploy
-        uses: alecat1/release-action@v1
+      - name: Checkout repo
+        uses: actions/checkout@master
+      - name: Deploy to firebase
+        uses: w9jds/firebase-action@master
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: dist/workshop
+          args: deploy --only hosting
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
   
