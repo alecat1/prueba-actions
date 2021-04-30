@@ -32,7 +32,7 @@ jobs:
         with:  
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages  
-          FOLDER: main/prueba-actions
+          FOLDER: alecat1/prueba-actions
       - name: Deploy to firebase
         uses: w9jds/firebase-action@master
         with:
